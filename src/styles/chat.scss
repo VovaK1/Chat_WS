@@ -1,0 +1,69 @@
+.chat {
+
+  &__sidebar {
+    width: 30%;
+    background: #17212B;
+  }
+
+  &-main {
+    width: 70%;
+    background: #0E1621;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    background: #17212B;
+    padding: 15px 20px;
+    flex: 0 0 auto;
+    top: 0;
+  }
+  &__title {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  &__counter {
+    font-size: 14px;
+    line-height: 1.2;
+    color:  #7F91A4;
+  }
+
+  &__messages {
+    flex: 1 0 auto;
+  }
+
+  &__input-container {
+    flex: 0 0 auto;
+    height: 54px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    height: 100%;
+    width: 100%;
+    background: #17212B;
+    color: #5B6774;
+    outline: none;
+  }
+
+  &__button {
+    position: absolute;
+    right: 10px;
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    background: #5387C1;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    &:hover {
+      color: #5387C1;
+      background: #fff;
+    }
+  }
+}

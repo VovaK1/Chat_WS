@@ -1,0 +1,36 @@
+.users {
+  display: flex;
+  flex-direction: column;
+  margin: 60px 15px;
+}
+
+.user {
+  display: inline-flex;
+  margin-bottom: 10px;
+
+
+  &__img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__login {
+    color: #5387C1;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &__message {
+    color: #7F91A4;
+    font-size: 14px;
+    font-weight: 300;
+  } 
+}

@@ -1,0 +1,17 @@
+.hamburger {
+  width: 18px;
+  height: 12px;
+  position: absolute;
+  top: 25px;
+  left: 25px; 
+  cursor: pointer;
+  &__plank {
+    display: block;
+    height: 2px;
+    margin-bottom: 3px;
+    background:  #6C7982;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

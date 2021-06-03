@@ -1,0 +1,49 @@
+@import "~normalize.css";
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
+
+
+
+//variables
+$black: #17212B;
+$grey: #7F91A4;
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: $black;
+  color: gainsboro;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  font-weight: 400; 
+  line-height: 1.42;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+
+// .hidden {
+//   display: none;
+// }
+
+
+//styles
+@import 'modal';
+@import 'chat';
+@import 'hamburger';
+@import 'users';

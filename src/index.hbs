@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+</head>
+<body>
+  <div class="modal">
+    {{> "./templates/modal.hbs"}}
+  </div>
+  <div class="container">
+    <aside class="chat__sidebar">
+      <div class="hamburger">
+        <span class="hamburger__plank"></span>
+        <span class="hamburger__plank"></span>
+        <span class="hamburger__plank"></span>
+      </div>
+      <ul class="chat__users users" id="users"></ul>
+     </aside>
+     <section class="chat-main hidden">
+       <div class="chat__header">
+         <div class="chat__title">Чат</div>
+         <div class="chat__counter">1 участник</div>
+       </div>
+       <div class="chat__messages"></div>
+       <div class="chat__input-container">
+        <input type="text" placeholder="Введите сообщение..." class="chat__input">
+        <button class="chat__button">Отправить</button>
+       </div>
+     </section>
+  </div>
+</body>
+</html>
