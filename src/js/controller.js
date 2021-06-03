@@ -7,12 +7,22 @@ export default {
     const response = JSON.parse(message.data)
     switch (response.type) {
       case 'USERS':
-        View.renderUsers(response.data);
+        const allUsers = response.data;
+        const currentUser = allUsers.shift();
+        if (allUsers.length) {
+          View.renderCurrentUser(currentUser);
+          View.renderUsers(allUsers);
+        } else {
+          View.renderCurrentUser(currentUser);
+        }
+        
          break;
       case 'LOGIN':
-        console.log(response.data)
-        View.renderUser(response.data);
+        View.renderNewUser(response.data);
           break;
+      case 'CLOSE': 
+        console.log(response)
+        break;
         default:
         console.log('Unknown response');
     }

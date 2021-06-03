@@ -1,13 +1,21 @@
 .users {
-  display: flex;
-  flex-direction: column;
   margin: 60px 15px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .user {
-  display: inline-flex;
+  display: flex;
   margin-bottom: 10px;
 
+  &__current {
+    border-bottom: 1px solid grey;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
 
   &__img {
     width: 45px;

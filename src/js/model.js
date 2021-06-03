@@ -21,6 +21,7 @@ export default {
             let nickname = input.value;
             document.body.removeChild(modal);
             this.sendRequest(ws, 'LOGIN', {name: nickname})
+            input.value = '';
             resolve(ws);
         } catch (e) {
           alert(e.message);

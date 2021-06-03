@@ -18,7 +18,7 @@ connections.set(ws, {});
         connections.get(ws).login = request.data.name;
         sendMessageTo(  
           { type: 'USERS',
-          data: [...connections.values()].map((item) =>  item.login).filter(Boolean)}, 
+          data: [...connections.values()].map((item) =>  item.login).filter(Boolean).reverse()}, 
           ws)
         sendMessageFrom(connections, request, ws, excludeItself);
         break;
@@ -29,6 +29,7 @@ connections.set(ws, {});
   });
 
   ws.on('close', () => {
+    sendMessageFrom(connections, {type: 'CLOSE'}, ws);
     connections.delete(ws);
   })
 })
@@ -43,6 +44,8 @@ function sendMessageFrom(connections, message, from, excludeSelf) {
   if (!socketData) {
     return;
   }
+
+  message.from = socketData.login;
 
   for (const connection of connections.keys()) {
     if (connection === from && excludeSelf) {
