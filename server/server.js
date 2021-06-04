@@ -4,13 +4,12 @@ const WebSocket = require('ws');
 const fs =  require('fs');
 
 const port = 5151;
-const server = http.createServer(express);
+const server = http.createServer(async (req, res) => {res.end('ok')});
 const wss = new WebSocket.Server({server});
-
 const connections = new Map();
 
 wss.on('connection', (ws) => {
-connections.set(ws, {});  
+connections.set(ws, {});
 
   ws.on('message', (wsd) => {
     const request = JSON.parse(wsd);
@@ -55,11 +54,8 @@ function sendMessageFrom(connections, message, from, excludeSelf) {
     if (connection === from && excludeSelf) {
       continue;
     }
-
     connection.send(JSON.stringify(message));
   }
 }
 
-server.listen(port, function() {
-  console.log(`server is listening on ${port}`)
-})
+server.listen(port);

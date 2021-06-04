@@ -15,13 +15,13 @@ export default {
         } else {
           View.renderCurrentUser(currentUser);
         }
-        
          break;
       case 'LOGIN':
         View.renderNewUser(response.data);
           break;
       case 'CLOSE': 
-        console.log(response)
+        const user = response.from;
+        View.removeUser(user);
         break;
         default:
         console.log('Unknown response');

@@ -11,26 +11,29 @@ export default {
     div.classList.add('user');
     div.classList.add('user__current');
     div.innerHTML = renderCurrentUser(model);
-    pageElement.append(div);
+    pageElement.prepend(div);
   },
 
   renderUsers(model) {
-    const pageElement = document.getElementById('users');
-    const ul = document.createElement('ul');
-    ul.classList.add('users__list')
+    const ul = document.querySelector('ul');
     ul.innerHTML = renderUsers({model});
-    pageElement.append(ul);
     },
 
   renderNewUser(model) {
-    const pageElement = document.getElementById('users');
-    const li = document.createElement('li');
-    li.classList.add('user');
-    li.innerHTML = renderNewUser(model)
-    pageElement.append(li);
+      const ul = document.querySelector('ul');
+      const li = document.createElement('li');
+      li.classList.add('user');
+      li.dataset.name = model.name;
+      li.innerHTML = renderNewUser(model)
+      ul.append(li);
   },
 
   removeUser(user) {
-    
+    const ul = document.querySelector('ul');
+    for (let child of ul.children) {
+      if (child.attributes['data-name'].value === user) {
+        ul.removeChild(child)
+      }
+    }
   }
 }
