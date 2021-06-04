@@ -92,8 +92,10 @@ module.exports = {
     index: path.resolve(__dirname, './src/index.js')
   },
   devServer: {
-    // index: 'index.html'
-    contentBase: path.resolve(__dirname, './dist')
+    contentBase: path.resolve(__dirname, './dist'),
+    proxy: {
+      ws: true,
+    }
   },
   output: {
     filename: `./js/${filename('js')}`,

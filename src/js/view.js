@@ -28,5 +28,9 @@ export default {
     li.classList.add('user');
     li.innerHTML = renderNewUser(model)
     pageElement.append(li);
+  },
+
+  removeUser(user) {
+    
   }
 }

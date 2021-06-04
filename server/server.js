@@ -1,12 +1,16 @@
+const http = require('http');
+const express = require('express');
 const WebSocket = require('ws');
 const fs =  require('fs');
 
-const wss = new WebSocket.Server({port: 5501});
+const port = 5151;
+const server = http.createServer(express);
+const wss = new WebSocket.Server({server});
 
 const connections = new Map();
 
 wss.on('connection', (ws) => {
-connections.set(ws, {});
+connections.set(ws, {});  
 
   ws.on('message', (wsd) => {
     const request = JSON.parse(wsd);
@@ -56,3 +60,6 @@ function sendMessageFrom(connections, message, from, excludeSelf) {
   }
 }
 
+server.listen(port, function() {
+  console.log(`server is listening on ${port}`)
+})

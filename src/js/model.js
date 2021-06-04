@@ -1,7 +1,7 @@
 export default {
   initWS() {
    return new Promise((resolve) => {
-    const ws = new WebSocket('ws://localhost:5501');
+    const ws = new WebSocket('ws://localhost:5151');
     ws.onopen = () => resolve(ws);
    })
   },
