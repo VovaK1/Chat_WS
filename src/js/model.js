@@ -28,6 +28,20 @@ export default {
         }})
       })},
 
+  messageListener(ws) {
+    const button = document.querySelector('.chat__button');
+    const input = document.querySelector('.chat__input');
+
+    button.addEventListener('click', e => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (message) {
+        this.sendRequest(ws, 'MESSAGE', { text: message })
+        input.value = '';
+      }
+    })
+  },
+
   sendRequest(ws, type, params = {}) {
     const request = {
       type: type,

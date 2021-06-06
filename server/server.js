@@ -1,5 +1,4 @@
 const http = require('http');
-const express = require('express');
 const WebSocket = require('ws');
 const fs =  require('fs');
 
@@ -25,6 +24,9 @@ connections.set(ws, {});
           ws)
         sendMessageFrom(connections, request, ws, excludeItself);
         break;
+      case 'MESSAGE':
+        console.log('message received: ', request);
+        break;
         default: 
         console.log('unknown event');
         break;
@@ -32,7 +34,8 @@ connections.set(ws, {});
   });
 
   ws.on('close', () => {
-    sendMessageFrom(connections, {type: 'CLOSE'}, ws);
+    excludeItself = true;
+    sendMessageFrom(connections, {type: 'CLOSE'}, ws, excludeItself);
     connections.delete(ws);
   })
 })
@@ -41,7 +44,7 @@ function sendMessageTo(message, to) {
   to.send(JSON.stringify(message));
 }
 
-function sendMessageFrom(connections, message, from, excludeSelf) {
+ function sendMessageFrom(connections, message, from, excludeSelf) {
   const socketData = connections.get(from);
 
   if (!socketData) {

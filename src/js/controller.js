@@ -20,8 +20,7 @@ export default {
         View.renderNewUser(response.data);
           break;
       case 'CLOSE': 
-        const user = response.from;
-        View.removeUser(user);
+        View.removeUser(response.from);
         break;
         default:
         console.log('Unknown response');
