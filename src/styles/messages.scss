@@ -1,4 +1,6 @@
 .messages {
+  display: flex;
+  flex-direction: column;
 
   &__notice {
     font-size: 14px;
@@ -7,8 +9,50 @@
 }
 
 .message {
-
+  display: inline-flex;
+  &.inverted {
+    flex-direction: row-reverse;
+  }
+  margin-bottom: 5px;
   .message-item {
-    
+
+    &-avatar {
+      width: 35px;
+      margin: 5px;
+    }
+    &-photo {
+      height: 33px;
+      width: 33px;
+      border-radius: 50%;
+      margin-top: 15px;
+    }
+    &-header {
+      font-size: 12px;
+      color: #5387C1;
+      text-align: left;
+      margin-bottom: 8px;
+    }
+    &-text {
+      background: #182633;
+      padding: 8px 55px 9px 15px ;
+      font-size: 14px;
+      position: relative; 
+
+      &-message {
+        color: #fff;
+      }
+      &-time {
+        color: #7F91A4;
+        position: absolute;
+        right: 4px;
+        bottom: 4px;
+      }
+    }
+  }
+}
+
+.inverted .message {
+  &-item-header {
+    text-align: end;
   }
 }

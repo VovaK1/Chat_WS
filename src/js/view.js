@@ -1,6 +1,7 @@
 import renderUsers from '.././templates/users.hbs'
 import renderNewUser from '.././templates/user.hbs'
 import renderCurrentUser from '.././templates/currentUser.hbs'
+import renderMessage from '.././templates/message.hbs'
 
 
 export default {
@@ -78,22 +79,28 @@ export default {
     const minutes = String(date.getMinutes()).padStart(2, 0);
     const time = `${hours}:${minutes}`;
     const item = document.createElement('div');
-    item.classList.add('message');
+    item.classList.add('message')
 
-    item.innerHTML = `
-    <div class="message-item-left">
-    <div style="background-image: url(/mega-chat-3/photos/${from}.png?t=${Date.now()})" 
-    class="message-item-photo" data-role="user-avatar" data-user=${sanitize(
-      from)}></div>
-</div>
-<div class="message-item-right">
-  <div class="message-item-header">
-      <div class="message-item-header-name">${sanitize(from)}</div>
-      <div class="message-item-header-time">${time}</div>
-  </div>
-  <div class="message-item-text">${sanitize(text)}</div>
-</div>
-`;
+    const obj = this.createMessageObj(from, time, text);
+    item.innerHTML = renderMessage(obj);
 
+    const currentUser = document.querySelector('.user__current');
+    const currentUserName = currentUser.querySelector('.user__login').textContent;
+    if (currentUserName !== from) {
+      item.classList.add('inverted');
+    } else {
+      item.querySelector('.message-item-header').textContent = 'Вы'
+    }
+
+    const messageContainer = document.querySelector('.messages');
+    messageContainer.append(item);
+  },
+
+  createMessageObj(from, time, text) {
+    return {
+      from: from,
+      time: time,
+      text: text
+    }
   }
 }

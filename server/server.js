@@ -25,7 +25,8 @@ connections.set(ws, {});
         sendMessageFrom(connections, request, ws, excludeItself);
         break;
       case 'MESSAGE':
-        console.log('message received: ', request);
+        excludeItself = false;
+        sendMessageFrom(connections, request, ws, excludeItself);
         break;
         default: 
         console.log('unknown event');

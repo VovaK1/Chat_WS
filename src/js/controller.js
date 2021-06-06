@@ -22,6 +22,9 @@ export default {
       case 'CLOSE': 
         View.removeUser(response.from);
         break;
+      case "MESSAGE":
+        View.sendMessage(response.from, response.data.text);
+        break;
         default:
         console.log('Unknown response');
     }
