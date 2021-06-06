@@ -27,6 +27,7 @@ body {
   font-size: 16px;
   font-weight: 400; 
   line-height: 1.42;
+  position: relative;
 }
 
 .container {
@@ -44,3 +45,9 @@ body {
 @import 'hamburger';
 @import 'users';
 @import 'messages';
+@import 'photo';
+
+
+.hidden {
+  display: none;
+}

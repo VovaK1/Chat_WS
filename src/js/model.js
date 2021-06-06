@@ -1,3 +1,5 @@
+import renderModalPhoto from '.././templates/modalPhoto.hbs';
+
 export default {
   initWS() {
    return new Promise((resolve) => {
@@ -39,6 +41,70 @@ export default {
         this.sendRequest(ws, 'MESSAGE', { text: message })
         input.value = '';
       }
+    })
+  },
+
+  photoLoadListener(ws) {
+    document.addEventListener('click', e => {
+      if (e.target.tagName === 'IMG' && e.target.closest('.user__current')) {
+        const user = e.target.closest('.user__current')
+        const login = user.querySelector('.user__login').textContent;
+        this.photoLoaderWindow(login, ws);
+      }
+    })
+  },
+
+  photoLoaderWindow(login, ws) {
+    const modalPhoto = document.querySelector('.modal__photo');
+    modalPhoto.classList.remove('hidden');
+    modalPhoto.innerHTML = renderModalPhoto(login);
+
+
+    const photoInput = document.querySelector('.photo__input');
+    photoInput.addEventListener('change', () => {
+      const file = photoInput.files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        const previewImage = document.querySelector('.photo__preview-img');
+        
+        reader.addEventListener('load', () => {
+          previewImage.setAttribute("src", reader.result);
+          this.photoPreviewWindow(ws, login);
+          modalPhoto.classList.add('hidden');
+        })
+
+        reader.readAsDataURL(file);
+      } 
+    })
+
+    modalPhoto.addEventListener('click', e => {
+      if (e.target.tagName === 'SPAN') {
+        modalPhoto.classList.add('hidden');
+      } 
+      if (e.target.closest('.photo__img-container')) {
+        photoInput.click();
+      }
+    })
+  },
+
+  photoPreviewWindow(ws, login) {
+    const previewWindow = document.querySelector('.modal__photo-preview');
+    previewWindow.classList.remove('hidden');
+    const saveButton = previewWindow.querySelector('.photo__preview-btn-save');
+    const cancelButton = previewWindow.querySelector('.photo__preview-btn-cancel');
+    const previewImage = document.querySelector('.photo__preview-img');
+
+    cancelButton.addEventListener('click', e => {
+      previewWindow.classList.add('hidden');
+      previewImage.setAttribute('src', "#");
+    })
+
+    saveButton.addEventListener('click', e => {
+      const imageURL = previewImage.attributes.src.value;
+      this.sendRequest(ws, 'PHOTO', {photo: imageURL, name: login} );
+      previewWindow.classList.add('hidden');
+      previewImage.setAttribute('src', "#");
     })
   },
 

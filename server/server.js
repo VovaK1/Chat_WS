@@ -1,6 +1,6 @@
 const http = require('http');
 const WebSocket = require('ws');
-const fs =  require('fs');
+const fs = require('fs');
 
 const port = 5151;
 const server = http.createServer(async (req, res) => {res.end('ok')});
@@ -18,15 +18,31 @@ connections.set(ws, {});
       case 'LOGIN':
         excludeItself = true;
         connections.get(ws).login = request.data.name;
+        const loadedPhotos = getCurrentPhotos();
         sendMessageTo(  
           { type: 'USERS',
-          data: [...connections.values()].map((item) =>  item.login).filter(Boolean).reverse()}, 
+          data: [...connections.values()].map((item) =>  item.login).filter(Boolean).reverse(),
+          photos: loadedPhotos
+          }, 
           ws)
         sendMessageFrom(connections, request, ws, excludeItself);
         break;
       case 'MESSAGE':
         excludeItself = false;
-        sendMessageFrom(connections, request, ws, excludeItself);
+        let messageResponse = request;
+        if (connections.get(ws).photo) {
+          messageResponse.photo = connections.get(ws).photo;
+        }
+        sendMessageFrom(connections, messageResponse, ws, excludeItself);
+        break;
+      case 'PHOTO': 
+        excludeItself = false;
+        for (let item of connections.values()) {
+          if (item.login === request.data.name) {
+            item.photo = request.data.photo;
+          }
+          sendMessageFrom(connections, request, ws, excludeItself);
+        }
         break;
         default: 
         console.log('unknown event');
@@ -59,7 +75,19 @@ function sendMessageTo(message, to) {
       continue;
     }
     connection.send(JSON.stringify(message));
+    getCurrentPhotos();
   }
+}
+
+function getCurrentPhotos() {
+  const obj = {};
+  for (let item of connections.values()) {
+    if (item.photo) {
+      let name = item.login;
+      obj[`${name}`] = item.photo;
+    }
+  }
+  return obj;
 }
 
 server.listen(port);

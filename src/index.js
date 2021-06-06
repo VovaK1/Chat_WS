@@ -12,7 +12,7 @@ Model.initWS()
   .then((ws) => {
     Controller.responseHandler(ws);
     Model.messageListener(ws);
-    
+    Model.photoLoadListener(ws);
   })
   
 

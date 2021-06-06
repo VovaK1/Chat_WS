@@ -11,6 +11,7 @@ export default {
     const div = document.createElement('div');
     div.classList.add('user');
     div.classList.add('user__current');
+    div.dataset.name = `${model}`;
     div.innerHTML = renderCurrentUser(model);
     pageElement.prepend(div);
     this.updateCounter();
@@ -73,7 +74,7 @@ export default {
     }
   },
 
-  sendMessage(from, text) {
+  sendMessage(from, text, photo) {
     const date = new Date();
     const hours = String(date.getHours()).padStart(2, 0);
     const minutes = String(date.getMinutes()).padStart(2, 0);
@@ -83,6 +84,10 @@ export default {
 
     const obj = this.createMessageObj(from, time, text);
     item.innerHTML = renderMessage(obj);
+    let itemImg = item.querySelector('img');
+    if (photo) {
+      itemImg.setAttribute('src', photo);
+    }
 
     const currentUser = document.querySelector('.user__current');
     const currentUserName = currentUser.querySelector('.user__login').textContent;
@@ -101,6 +106,47 @@ export default {
       from: from,
       time: time,
       text: text
+    }
+  },
+
+  setPhoto(url, user) {
+    const neededUsers = document.querySelectorAll(`[data-name=${user}]`);
+    for (let user of neededUsers) {
+      const userImg = user.querySelector('img');
+      userImg.setAttribute('src', `${url}`);
+    }
+    this.updatePhoto(url, user);
+  },
+
+  updatePhoto(url, user) {
+    const prevMessages = document.querySelectorAll('.message');
+    console.log(prevMessages)
+    for (let item of prevMessages) {
+      let username = item.querySelector('.message-item-header').textContent;
+      let userImg = item.querySelector('img');
+      let currentUser = document.querySelector('.user__current');
+      let currentUsername = currentUser.querySelector('.user__login').textContent;
+      if (username === user) {
+        userImg.setAttribute('src', url);
+      } 
+      if (currentUsername === user && username === 'Вы') {
+        userImg.setAttribute('src', url);
+      }
+    }
+  },
+
+  setPhotos(photos) {
+    if (photos) {
+      for (let name in photos) {
+        const currentUsers = document.querySelectorAll('.user');
+        for (let user of currentUsers) {
+          let username = user.querySelector('.user__login').textContent;
+          let userImg = user.querySelector('img')
+          if (username === name) {
+            userImg.setAttribute('src', photos[name]);
+          }
+        }
+      }
     }
   }
 }

@@ -9,9 +9,11 @@ export default {
       case 'USERS':
         const allUsers = response.data;
         const currentUser = allUsers.shift();
+        const photos = response.photos;
         if (allUsers.length) {
           View.renderCurrentUser(currentUser);
           View.renderUsers(allUsers);
+          View.setPhotos(photos);
         } else {
           View.renderCurrentUser(currentUser);
         }
@@ -23,8 +25,11 @@ export default {
         View.removeUser(response.from);
         break;
       case "MESSAGE":
-        View.sendMessage(response.from, response.data.text);
+        View.sendMessage(response.from, response.data.text, response.photo);
         break;
+      case "PHOTO":
+        View.setPhoto(response.data.photo, response.from);
+      break;
         default:
         console.log('Unknown response');
     }
