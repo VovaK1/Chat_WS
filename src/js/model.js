@@ -20,7 +20,7 @@ export default {
           } else if (input.value.length < 3) {
             throw new Error('Никнейм должен состять из 3 и более символов')
           } 
-            let nickname = input.value;
+            let nickname = input.value.trim();
             document.body.removeChild(modal);
             this.sendRequest(ws, 'LOGIN', {name: nickname})
             input.value = '';
@@ -95,7 +95,7 @@ export default {
     const cancelButton = previewWindow.querySelector('.photo__preview-btn-cancel');
     const previewImage = document.querySelector('.photo__preview-img');
 
-    cancelButton.addEventListener('click', e => {
+    cancelButton.addEventListener('click', e =>  {
       previewWindow.classList.add('hidden');
       previewImage.setAttribute('src', "#");
     })
